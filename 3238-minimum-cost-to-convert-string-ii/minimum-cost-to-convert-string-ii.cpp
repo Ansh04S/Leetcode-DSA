@@ -5,7 +5,6 @@ public:
         int n = source.size();
         int m = original.size();
 
-        // Map strings to ids
         unordered_map<string, int> id;
         vector<string> nodes;
 
@@ -32,7 +31,6 @@ public:
             dist[u][v] = min(dist[u][v], (long long)cost[i]);
         }
 
-        // Floyd–Warshall
         for (int k = 0; k < V; k++) {
             for (int i = 0; i < V; i++) {
                 if (dist[i][k] == INF) continue;
@@ -43,7 +41,6 @@ public:
             }
         }
 
-        // Group original strings by length
         unordered_map<int, vector<int>> byLength;
         for (int i = 0; i < m; i++) {
             byLength[original[i].size()].push_back(i);
@@ -54,12 +51,10 @@ public:
 
         for (int i = n - 1; i >= 0; i--) {
 
-            // No operation needed
             if (source[i] == target[i]) {
                 dp[i] = dp[i + 1];
             }
 
-            // Try only valid transformation lengths
             for (auto &p : byLength) {
                 int len = p.first;
                 if (i + len > n) continue;
